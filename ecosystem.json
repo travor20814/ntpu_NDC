@@ -1,0 +1,13 @@
+{
+  "apps": [{
+    "cwd": "client",
+    "name": "NorthDanceCompetition",
+    "script": "run.js",
+    "env": {
+      "NODE_ENV": "development",
+      "DEBUG": "Set:*",
+      "PORT": "1995",
+    },
+    "next_gen_js": true
+  }]
+}

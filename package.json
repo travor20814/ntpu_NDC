@@ -1,0 +1,52 @@
+{
+  "name": "dance_web",
+  "version": "1.0.0",
+  "description": "self practicing",
+  "main": "client/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/travor20814/ntpu_NDC.git"
+  },
+  "keywords": [
+    "ntpu",
+    "redux",
+    "react"
+  ],
+  "author": "Travor Lee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/travor20814/ntpu_NDC/issues"
+  },
+  "homepage": "https://github.com/travor20814/ntpu_NDC#readme",
+  "dependencies": {
+    "babel-loader": "^6.2.2",
+    "babel-plugin-transform-runtime": "^6.5.2",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-1": "^6.5.0",
+    "babel-register": "^6.11.6",
+    "debug": "^2.2.0",
+    "eventsource-polyfill": "^0.9.6",
+    "express": "^4.13.4",
+    "file-loader": "^0.8.5",
+    "image-webpack-loader": "^1.6.3",
+    "lodash": "^4.11.0",
+    "moment": "^2.11.2",
+    "radium": "^0.16.6",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-hot-loader": "^1.3.0",
+    "react-redux": "^4.4.0",
+    "react-router": "^2.0.0",
+    "redux": "^3.3.1",
+    "redux-simple-router": "^2.0.4",
+    "redux-thunk": "^1.0.3",
+    "svg-url-loader": "^1.0.2",
+    "webpack": "^1.12.13",
+    "webpack-dev-middleware": "^1.5.1",
+    "webpack-hot-middleware": "^2.7.1"
+  }
+}
