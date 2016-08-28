@@ -26,9 +26,13 @@ const styles = {
     position: 'fixed',
     width: '100%',
     height: '70px',
-    background: 'rgba(0, 0, 0, 0.5)',
     display: 'flex',
     alignItems: 'center',
+    zIndex: 99,
+    transition: '0.2s ease-in-out',
+  },
+  black: {
+    background: 'rgba(0, 0, 0, 0.5)',
   },
   linkBlock: {
     width: '100%',
@@ -42,13 +46,42 @@ const styles = {
     color: '#fff',
     fontSize: '20px',
     margin: '0 30px 0 0',
+    padding: '5px',
+    ':hover': {
+      borderBottom: '2px solid #034158'
+    },
   },
 };
 
 class SiteHeader extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      transit: false,
+    };
+  }
+
+  componentDidMount(){
+    window.addEventListener('scroll', this.handleScroll.bind(this));
+  }
+
+  componentWillUnmount(){
+    window.removeEventListener('scroll', this.handleScroll.bind(this));
+  }
+
+  handleScroll(e){
+    let scrollTop = e.srcElement.body.scrollTop;
+    {scrollTop > 750 ? this.setState({ transit: true }) : this.setState({ transit: false })}
+  }
+
   render() {
+    const {
+      transit
+    } = this.state;
+
     return (
-      <div style={styles.wrapper}>
+      <div style={[styles.wrapper, transit && styles.black]}>
         <div style={styles.linkBlock}>
           {links.map((link, index) => {
             return (

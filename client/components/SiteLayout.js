@@ -5,7 +5,7 @@ import SiteHeader from './SiteHeader.js';
 
 const styles = {
   wrapper: {
-
+    
   },
   main: {
     minHeight: 'calc(100vh - 70px)',
