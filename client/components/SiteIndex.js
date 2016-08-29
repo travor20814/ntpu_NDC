@@ -53,7 +53,7 @@ const sponsors = [{
 },{
   name: '台北大學熱舞社',
   logo: require('../images/logos/logoExample.png'),
-},];
+}];
 
 const styles = {
   wrapper: {
@@ -62,7 +62,7 @@ const styles = {
   },
   landing: {
     width: '100%',
-    height: '800px',
+    height: '700px',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
@@ -75,6 +75,8 @@ const styles = {
   },
   first: {
     backgroundImage: `url(${require('../images/wholeview.jpg')})`,
+    '-webkit-filter': 'brightness(60%)',
+    filter: 'brightness(60%)',
   },
   second: {
     backgroundImage: `url(${require('../images/firstprizee.jpg')})`,
@@ -90,6 +92,7 @@ const styles = {
     borderRadius: '20px',
     margin: '0 0 15% 0',
     transition: '0.5s ease-in-out',
+
   },
   end: {
     height: 200,
@@ -383,7 +386,7 @@ class SiteIndex extends Component {
           <div style={styles.host}>
             <span style={styles.hostTitle}>主辦單位</span>
             <div style={styles.logoBox}>
-              <img src={require('../logos/logoExample.png')} style={styles.logo}/>
+              <img src={require('../images/logos/logoExample.png')} style={styles.logo}/>
               <span style={styles.logoDesc}>臺北大學熱舞社</span>
             </div>
           </div>
