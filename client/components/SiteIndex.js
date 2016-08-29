@@ -59,27 +59,30 @@ const styles = {
   wrapper: {
     width: '100%',
     height: '2000px',
+    position: 'relative',
   },
   landing: {
     width: '100%',
     height: '700px',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-    backgroundAttachment: 'fixed',
     position: 'relative',
     display: 'flex',
     alignItems: 'flex-end',
     justifyContent: 'center',
     overflow: 'hidden',
   },
-  first: {
-    backgroundImage: `url(${require('../images/wholeview.jpg')})`,
-    '-webkit-filter': 'brightness(60%)',
-    filter: 'brightness(60%)',
+  landingBack: {
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    backgroundImage: `url(${require('../images/wholeview3.jpg')})`,
+    backgroundAttachment: 'fixed',
   },
   second: {
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
     backgroundImage: `url(${require('../images/firstprizee.jpg')})`,
+    backgroundAttachment: 'fixed',
   },
   sloganBox: {
     width: '600px',
@@ -88,27 +91,27 @@ const styles = {
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
-    background: 'rgba(0, 0, 0, 0.2)',
     borderRadius: '20px',
-    margin: '0 0 15% 0',
+    margin: '0 0 10% 0',
     transition: '0.5s ease-in-out',
-
   },
   end: {
     height: 200,
     background: 'transparent',
     margin: '0 0 10% 0',
     opacity: 0,
-    transition: '2s ease-in-out',
+    transition: '0.3s ease-in-out',
   },
   endHover: {
     opacity: 1,
   },
   title: {
+    width: '100%',
     fontSize: '100px',
     fontWeight: 'bold',
     color: '#fff',
     letterSpacing: 8,
+    textAlign: 'center',
   },
   subtitle: {
     fontSize: '28px',
@@ -167,6 +170,9 @@ const styles = {
   },
   noBorder: {
     borderBottom: 'transparent',
+  },
+  noSpacing: {
+    letterSpacing: 1,
   },
   innerBox: {
     display: 'flex',
@@ -325,6 +331,7 @@ class SiteIndex extends Component {
 
   componentDidMount(){
     window.addEventListener('scroll', this.handleScroll.bind(this));
+
   }
 
   componentWillUnmount(){
@@ -333,10 +340,17 @@ class SiteIndex extends Component {
 
   handleScroll(e){
     let scrollTop = e.srcElement.body.scrollTop;
-    console.log(scrollTop);
-    {scrollTop > 150 ? this.setState({ transitTopic: true }) : this.setState({ transitTopic: false })}
-    {scrollTop > 2800 ? this.setState({ transitJudge: true }) : this.setState({ transitJudge: false })}
-    {scrollTop > 4800 ? this.setState({ transitEnd: true }) : this.setState({ transitEnd: false })}
+    //console.log(scrollTop);
+    if (scrollTop > 4800 && this.state.transitEnd === false) { this.setState({ transitEnd: true }); }
+    if (scrollTop < 4800 && this.state.transitEnd === true) { this.setState({ transitEnd: false }); }
+    /*if (scrollTop > 20 && this.state.transitTopic === false) {
+      this.setState({
+        transitTopic: true,
+      });
+    }*/
+    //{scrollTop > 20  ? this.setState({ transitTopic: true }) :  this.setState({ transitTopic: false })}
+    //{scrollTop > 2800 ? this.setState({ transitJudge: true }) : this.setState({ transitJudge: false })}
+    //{scrollTop > 4800 ? this.setState({ transitEnd: true }) : this.setState({ transitEnd: false })}
   }
 
   render() {
@@ -349,10 +363,10 @@ class SiteIndex extends Component {
 
     return (
       <div style={styles.wrapper}>
-        <div style={[styles.landing, styles.first]}>
-          <div style={[styles.sloganBox, transitTopic && styles.fadeOut]}>
+        <div style={[styles.landing, styles.landingBack]}>
+          <div style={styles.sloganBox}>
             <span style={styles.title}>北區舞展</span>
-            <span style={styles.subtitle}>—— North Taiwan Dance Competition ——</span>
+            <span style={[styles.subtitle, styles.noSpacing]}>──</span><span style={styles.subtitle}>North Taiwan Dance Competition</span><span style={[styles.subtitle, styles.noSpacing]}>─—</span>
             <span style={styles.info}>
               初賽：2016/11/26（六）<br />
               複賽：2016/12/25（日）
@@ -415,7 +429,7 @@ class SiteIndex extends Component {
               <li style={[styles.listBox, index + 1 === judges.length && styles.noBorder]} key={index}>
                 {index % 2 === 0 ?
                   <div style={styles.innerBox}>
-                    <img src={judge.photo} style={[styles.hide , transitJudge && styles.photo]}/>
+                    <img src={judge.photo} style={styles.photo}/>
                     <div style={styles.descBlock}>
                       <span style={styles.danceStyle}>{judge.style}</span>
                       {judge.description? (
@@ -442,7 +456,7 @@ class SiteIndex extends Component {
                         </ul>
                       ): null}
                     </div>
-                    <img src={judge.photo} style={[styles.hide , transitJudge && styles.photo]}/>
+                    <img src={judge.photo} style={styles.photo}/>
                   </div>
                 }
               </li>
@@ -451,8 +465,8 @@ class SiteIndex extends Component {
         </div>
         <div style={[styles.landing, styles.second]}>
         <div style={[styles.sloganBox, styles.end, transitEnd && styles.endHover]}>
-          <span style={styles.endTitle}>你還在等什麼？</span>
-          <Link to='/' style={styles.enterButton}>前往報名</Link>
+          <span style={styles.endTitle}>你準備好了嗎？</span>
+          <Link to='/' style={styles.enterButton}>了解更多</Link>
         </div>
         </div>
       </div>
