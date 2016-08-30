@@ -1,6 +1,7 @@
 import React, { Component, PropTypes as T } from 'react';
 import Radium from 'radium';
 import { Link as link } from 'react-router';
+import Scroll from 'react-scroll';
 
 const Link = Radium(link);
 const judges = [{
@@ -63,7 +64,7 @@ const styles = {
   },
   landing: {
     width: '100%',
-    height: '700px',
+    height: '100vh',
     position: 'relative',
     display: 'flex',
     alignItems: 'flex-end',
@@ -86,14 +87,20 @@ const styles = {
   },
   sloganBox: {
     width: '600px',
-    height: '400px',
+    height: '70vh',
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: '20px',
-    margin: '0 0 10% 0',
+    margin: 0,
     transition: '0.5s ease-in-out',
+    textAlign: 'center',
+  },
+  locate: {
+    width: 50,
+    height: 50,
+    margin: '0 0 -15px -30px',
   },
   end: {
     height: 200,
@@ -124,13 +131,39 @@ const styles = {
     color: '#fff',
     fontStyle: 'italic',
     letterSpacing: 3,
+    marginTop: -20,
+  },
+  landingBtn: {
+    border: '2px solid rgba(255, 255, 255, 0.5)',
+    borderRadius: '5px',
+    background: 'transparent',
+    width: 150,
+    height: 60,
+    padding: 20,
+    fontSize: 18,
+    color: '#fff',
+    marginTop: 70,
+    transition: '0.2s ease-in',
+    ':hover': {
+      background: 'rgba(255, 255, 255, 0.6)',
+      color: '#000',
+    },
+  },
+  landingLine: {
+    display: 'block',
+    position: 'absolute',
+    bottom: 0,
+    margin: '0 0 0 185px',
+    width: 2,
+    height: 28,
+    background: '#fff',
   },
   fadeOut: {
     opacity: 0.1,
   },
   middleBlock: {
     width: '100%',
-    height: '300px',
+    height: '220px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -211,7 +244,6 @@ const styles = {
   },
   introBlock: {
     width: '100%',
-    height: 2100,
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
@@ -223,6 +255,7 @@ const styles = {
     letterSpacing: 2,
     textAlign: 'center',
     lineHeight: 2,
+    margin: '-10px 0 15px 0',
   },
   videoBlock: {
     width: '100%',
@@ -353,6 +386,13 @@ class SiteIndex extends Component {
     //{scrollTop > 4800 ? this.setState({ transitEnd: true }) : this.setState({ transitEnd: false })}
   }
 
+  landingScroll(){
+    const scroll = Scroll.animateScroll;
+    const number = document.getElementById("landing").clientHeight;
+    console.log(number);
+    scroll.scrollTo(number); //scroll to about us
+  }
+
   render() {
     const {
       transitTopic,
@@ -363,13 +403,17 @@ class SiteIndex extends Component {
 
     return (
       <div style={styles.wrapper}>
-        <div style={[styles.landing, styles.landingBack]}>
+        <div style={[styles.landing, styles.landingBack]} id="landing">
           <div style={styles.sloganBox}>
             <span style={styles.title}>北區舞展</span>
             <span style={[styles.subtitle, styles.noSpacing]}>──</span><span style={styles.subtitle}>North Taiwan Dance Competition</span><span style={[styles.subtitle, styles.noSpacing]}>─—</span>
             <span style={styles.info}>
               初賽：2016/11/26（六）<br />
-              複賽：2016/12/25（日）
+              複賽：2016/12/25（日）<br />
+              <img src={require('../images/ic_action_place.png')} style={styles.locate} />
+              台北大學育樂館 <br />
+              <button style={styles.landingBtn} onClick={this.landingScroll.bind(this)}>了解更多</button>
+              <span style={styles.landingLine}></span>
             </span>
           </div>
         </div>
