@@ -4,6 +4,12 @@ import { Link as link } from 'react-router';
 import Scroll from 'react-scroll';
 
 const Link = Radium(link);
+const videos = [{
+  src: 'https://www.youtube.com/embed/a4MCQ1ON_MY',
+}, {
+  src: 'https://www.youtube.com/embed/fKb1DnYnrfE',
+}];
+
 const photos = [{
   src: require('../images/books.jpg'),
 },{
@@ -58,7 +64,7 @@ const styles = {
   },
   sloganBox: {
     width: '700px',
-    height: '70vh',
+    height: '520px',
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'center',
@@ -166,6 +172,10 @@ const styles = {
     alignItems: 'flex-start',
     justifyContent: 'center',
   },
+  introBackground: {
+    background: 'linear-gradient(to bottom, rgba(252,255,244,0.3) 0%,rgba(233,233,206,0.4) 100%)', /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: 'progid:DXImageTransform.Microsoft.gradient( startColorstr="#fcfff4", endColorstr="#e9e9ce",GradientType=0 )',
+  },
   introduction: {
     width: '100%',
     fontSize: 20,
@@ -179,27 +189,64 @@ const styles = {
     display: 'flex',
     flexWrap: 'no-wrap',
     justifyContent: 'center',
+    alignItems: 'center',
   },
-  video: {
-    width: 560,
-    margin: 2,
+  bigLogo: {
+    width: 276,
+    height: 400,
+    margin: '100px 50px',
+    '@media (min-width: 1300px)':{
+      width: 414,
+      height: 600,
+      marginRight: 100,
+    },
+  },
+  videoWrapper: {
+    width: 530,
+    height: 350,
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',
+    padding: '10px 0',
+    borderRadius: 5,
+    boxShadow: '4px 4px 12px -2px rgba(20%, 20%, 40%, 0.5)',
+    position: 'relative',
+    '@media (min-width: 1300px)':{
+      width: 700,
+      height: 440,
+    },
+  },
+  video: {
+    transition: '0.3s ease-in-out',
   },
   videoDesc: {
-    width: 560,
+    width: 530,
     fontSize: 20,
     fontWeight: 'bold',
     letterSpacing: 1,
     textAlign: 'center',
   },
   videoSubDesc: {
-    width: 560,
+    width: 530,
     fontSize: 16,
     letterSpacing: 1,
     textAlign: 'center',
     color: '#9b9b9b',
+  },
+  videoToggle: {
+    position: 'absolute',
+    height: '100%',
+    width: '10%',
+    top: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    border: 'none',
+    zIndex: 300,
+    background: 'transparent',
+    ':focus': {
+      outline: 0,
+    },
   },
   host: {
     width: '100%',
@@ -300,20 +347,33 @@ const styles = {
   left: {
     left: 0,
   },
+  leftOut: {
+    left: -50,
+  },
   right: {
     right: 0,
+  },
+  rightOut: {
+    right: -50,
   },
   photoGuide: {
     width: '100%',
     height: '100%',
-    position: 'absolute',
     transition: '0.3s ease-in-out',
   },
   show: {
+    position: 'relative',
+    zIndex: 1,
     opacity: 1,
+    left: 0,
+    top: 0,
   },
   hide: {
+    position: 'absolute',
+    zIndex: -500,
     opacity: 0,
+    left: 0,
+    top: 0,
   },
 };
 
@@ -324,6 +384,7 @@ class SiteIndex extends Component {
     this.state = {
       transitEnd: false,
       photoIndex: 0,
+      videoIndex: 0
     };
   }
 
@@ -350,7 +411,31 @@ class SiteIndex extends Component {
     scroll.scrollTo(number); //scroll to about us
   }
 
-  togglePhotoLeft(){
+  toggleVideoLeft(e){
+    if (this.state.videoIndex === 0) {
+      this.setState({
+        videoIndex: videos.length - 1,
+      });
+    } else {
+      this.setState({
+        videoIndex: this.state.videoIndex - 1,
+      });
+    }
+  }
+
+  toggleVideoRight(e){
+    if (this.state.videoIndex === videos.length - 1) {
+      this.setState({
+        videoIndex: 0,
+      });
+    } else {
+      this.setState({
+        videoIndex: this.state.videoIndex + 1,
+      });
+    }
+  }
+
+  togglePhotoLeft(e){
     if (this.state.photoIndex === 0) {
       this.setState({
         photoIndex: photos.length - 1,
@@ -362,7 +447,7 @@ class SiteIndex extends Component {
     }
   }
 
-  togglePhotoRight(){
+  togglePhotoRight(e){
     if (this.state.photoIndex === photos.length - 1) {
       this.setState({
         photoIndex: 0,
@@ -376,9 +461,11 @@ class SiteIndex extends Component {
 
   render() {
     const {
-      transitEnd
+      transitEnd,
+      photoIndex,
+      videoIndex
     } = this.state;
-
+    console.log(videoIndex);
     return (
       <div style={styles.wrapper}>
         <div style={[styles.landing, styles.landingBack]} id="landing">
@@ -395,51 +482,49 @@ class SiteIndex extends Component {
             </span>
           </div>
         </div>
-        <div style={styles.middleBlock}>
-          <div style={styles.middleInner}>
-            <span style={styles.middleContent}>關於北區舞展</span>
-          </div>
-        </div>
-        <div style={styles.introBlock}>
-          <span style={styles.introduction}>
-            首創北部地區大學熱舞社排舞賽事，爭奪最強熱舞社殊榮<br/>
-            自第？屆改為比賽模式後，賽事一年比一年刺激<br/>
-            每年有高達40所學校報名<br/>
-            想為自己熱舞社爭取榮耀，你還在等什麼？
-          </span>
-          <div style={styles.videoBlock}>
-            <div style={styles.video}>
-              <iframe width="507" height="300" src="https://www.youtube.com/embed/a4MCQ1ON_MY" frameBorder="0" allowFullScreen></iframe>
-              <span style={styles.videoDesc}>第12屆精彩特輯</span>
-              <span style={styles.videoSubDesc}>每年活動結束後，製作精彩賽事回顧</span>
+        <section style={[styles.introBlock, styles.introBackground]}>
+          <div style={styles.introBlock}>
+            <div style={styles.videoBlock}>
+              <img src={require('../images/北區標準字.png')} style={styles.bigLogo} />
+              <div style={styles.videoWrapper}>
+                {videos.map((video, index) => {
+                  const showVideo = (videoIndex === index ? true : false);
+                  return (
+                    <iframe key={index} width="95%" height="85%" src={video.src} style={[styles.video, styles.hide, showVideo && styles.show]} frameBorder="0" allowFullScreen></iframe>
+                  );
+                })}
+                <span style={styles.videoDesc}>第12屆精彩特輯</span>
+                <span style={styles.videoSubDesc}>每年活動結束後，製作精彩賽事回顧</span>
+                <button ref='left' style={[styles.videoToggle, styles.leftOut]} onClick={this.toggleVideoLeft.bind(this)}>
+                  <i className='fa fa-angle-left fa-5x' ></i>
+                </button>
+                <button ref='right' style={[styles.videoToggle, styles.rightOut]} onClick={this.toggleVideoRight.bind(this)}>
+                  <i className='fa fa-angle-right fa-5x' ></i>
+                </button>
+              </div>
             </div>
-            <div style={styles.video}>
-              <iframe width="507" height="300" src="https://www.youtube.com/embed/fKb1DnYnrfE" frameBorder="0" allowFullScreen></iframe>
-              <span style={styles.videoDesc}>第11屆活動宣傳片</span>
-              <span style={styles.videoSubDesc}>賽前製作宣傳片，宣傳活動及贊助廠商</span>
+            <div style={styles.host}>
+              <span style={styles.hostTitle}>主辦單位</span>
+              <div style={styles.logoBox}>
+                <img src={require('../images/logos/logoExample.png')} style={styles.logo}/>
+                <span style={styles.logoDesc}>臺北大學熱舞社</span>
+              </div>
             </div>
-          </div>
-          <div style={styles.host}>
-            <span style={styles.hostTitle}>主辦單位</span>
-            <div style={styles.logoBox}>
-              <img src={require('../images/logos/logoExample.png')} style={styles.logo}/>
-              <span style={styles.logoDesc}>臺北大學熱舞社</span>
-            </div>
-          </div>
-          <div style={styles.sponsor}>
-            <span style={[styles.hostTitle, styles.sponsorTitle]}>贊助廠商</span>
-            <div style={styles.logoBox}>
-              {sponsors.map((sponsor, index) => {
-                return (
-                  <div style={styles.logoInner} key={index}>
-                    <img src={sponsor.logo} style={styles.logo}/>
-                    <span style={styles.logoDesc}>{sponsor.name}</span>
-                  </div>
-                );
-              })}
+            <div style={styles.sponsor}>
+              <span style={[styles.hostTitle, styles.sponsorTitle]}>贊助廠商</span>
+              <div style={styles.logoBox}>
+                {sponsors.map((sponsor, index) => {
+                  return (
+                    <div style={styles.logoInner} key={index}>
+                      <img src={sponsor.logo} style={styles.logo}/>
+                      <span style={styles.logoDesc}>{sponsor.name}</span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
+        </section>
         <div style={[styles.middleBlock, styles.backgroundChange]}>
           <div style={styles.middleInner}>
             <span style={styles.middleContent}>周邊商品</span>
@@ -453,15 +538,15 @@ class SiteIndex extends Component {
         <div style={styles.mediaWrapper}>
           <div style={styles.photoWrapper}>
             {photos.map((photo, index) => {
-              const show = (this.state.photoIndex === index ? true : false);
+              const showPhoto = (photoIndex === index ? true : false);
               return (
-                <img src={photo.src} style={[styles.photoGuide, styles.hide, show && styles.show]} key={index}/>
+                <img src={photo.src} style={[styles.photoGuide, styles.hide, showPhoto && styles.show]} key={index}/>
               );
             })}
-            <button ref='left' style={[styles.photoToggle, styles.left]} onClick={this.togglePhotoLeft.bind(this)}>
+            <button ref='photoLeft' style={[styles.photoToggle, styles.left]} onClick={this.togglePhotoLeft.bind(this)}>
               <i className='fa fa-angle-left fa-5x' ></i>
             </button>
-            <button ref='right' style={[styles.photoToggle, styles.right]} onClick={this.togglePhotoRight.bind(this)}>
+            <button ref='photoRight' style={[styles.photoToggle, styles.right]} onClick={this.togglePhotoRight.bind(this)}>
               <i className='fa fa-angle-right fa-5x' ></i>
             </button>
           </div>

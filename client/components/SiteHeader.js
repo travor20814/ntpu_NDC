@@ -31,6 +31,7 @@ const styles = {
     zIndex: 99,
     transition: '0.2s ease-in-out',
     background: 'rgba(0, 0, 0, 0.5)',
+    boxSizing: 'border-box',
   },
   transparent: {
     background: 'transparent',
