@@ -6,13 +6,13 @@ import Scroll from 'react-scroll';
 const Link = Radium(link);
 const links = [{
   name: '關於我們',
-  path: '/',
+  path: '/about',
 },{
   name: '評審介紹',
-  path: '/',
+  path: '/judges',
 },{
   name: '賽制簡介',
-  path: '/',
+  path: '/competition',
 },{
   name: '活動照片',
   path: '/',
@@ -30,6 +30,10 @@ const styles = {
     alignItems: 'center',
     zIndex: 99,
     transition: '0.2s ease-in-out',
+    background: 'rgba(0, 0, 0, 0.5)',
+  },
+  transparent: {
+    background: 'transparent',
   },
   black: {
     background: 'rgba(0, 0, 0, 0.5)',
@@ -109,7 +113,7 @@ class SiteHeader extends Component {
     } = this.state;
 
     return (
-      <div style={[styles.wrapper, transit && styles.black]}>
+      <div style={[styles.wrapper, this.props.scrollEffect && styles.transparent, transit && styles.black]}>
         <div style={styles.logoBox}>
           <Link to='/'>
             <img src={require('../images/logo.png')} style={styles.logo}/>
@@ -120,7 +124,7 @@ class SiteHeader extends Component {
             return (
               index === links.length - 1 ?
                 <a href={link.path} style={styles.links} onClick={this.handleClick.bind(this, index)} target='_blank' key={index}>{link.name}</a> :
-                <Link to={link.path} style={styles.links} onClick={this.handleClick.bind(this, index)} key={index}>{link.name}</Link>
+                <Link to={link.path} style={styles.links} key={index}>{link.name}</Link>
             );
           })}
         </div>

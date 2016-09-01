@@ -5,7 +5,7 @@ import SiteHeader from './SiteHeader.js';
 
 const styles = {
   wrapper: {
-    
+
   },
   main: {
     minHeight: 'calc(100vh - 70px)',
@@ -13,11 +13,37 @@ const styles = {
 };
 
 class SiteLayout extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      index: true,
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const path = nextProps.location.pathname;
+
+    {path === '/' ? this.setState({ index: true }) : this.setState({ index: false })}
+  }
+
+  componentDidMount() {
+    const path = this.props.location.pathname;
+
+    {path === '/' ? this.setState({ index: true }) : this.setState({ index: false })}
+  }
+
   render() {
+    const {
+      index
+    } = this.state;
+
     return (
       <StyleRoot>
         <div style={styles.wrapper}>
-          <SiteHeader/>
+          <SiteHeader
+            scrollEffect = {index}
+          />
           <main style={styles.main}>
             {this.props.children}
           </main>
