@@ -1,41 +1,13 @@
 import React, { Component, PropTypes as T } from 'react';
 import Radium from 'radium';
 import { Link as link } from 'react-router';
+import Scroll from 'react-scroll';
 
 const Link = Radium(link);
-const judges = [{
-  name: '一德老師',
-  style: 'popping',
-  photo: require('../images/judges/poppingED.jpg'),
-  description: [{
-    content: '帥帥帥',
-  },{
-    content: '帥帥帥',
-  },{
-    content: '帥帥帥',
-  }],
+const photos = [{
+  src: require('../images/books.jpg'),
 },{
-  name: '一德老師',
-  style: 'popping',
-  photo: require('../images/judges/poppingED.jpg'),
-  description: [{
-    content: '帥帥帥',
-  },{
-    content: '帥帥帥',
-  },{
-    content: '帥帥帥',
-  }],
-},{
-  name: '一德老師',
-  style: 'popping',
-  photo: require('../images/judges/poppingED.jpg'),
-  description: [{
-    content: '帥帥帥',
-  },{
-    content: '帥帥帥',
-  },{
-    content: '帥帥帥',
-  }],
+  src: require('../images/banner.jpg'),
 }];
 
 const sponsors = [{
@@ -59,59 +31,68 @@ const styles = {
   wrapper: {
     width: '100%',
     height: '2000px',
+    position: 'relative',
   },
   landing: {
     width: '100%',
-    height: '700px',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-    backgroundAttachment: 'fixed',
+    height: '100vh',
     position: 'relative',
     display: 'flex',
     alignItems: 'flex-end',
     justifyContent: 'center',
     overflow: 'hidden',
   },
-  first: {
-    backgroundImage: `url(${require('../images/wholeview.jpg')})`,
-    '-webkit-filter': 'brightness(60%)',
-    filter: 'brightness(60%)',
+  landingBack: {
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    backgroundImage: `url(${require('../images/wholeview3.jpg')})`,
+    backgroundAttachment: 'fixed',
   },
   second: {
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
     backgroundImage: `url(${require('../images/firstprizee.jpg')})`,
+    backgroundAttachment: 'fixed',
   },
   sloganBox: {
-    width: '600px',
-    height: '400px',
+    width: '700px',
+    height: '70vh',
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
-    background: 'rgba(0, 0, 0, 0.2)',
     borderRadius: '20px',
-    margin: '0 0 15% 0',
+    margin: 0,
     transition: '0.5s ease-in-out',
-
+    textAlign: 'center',
+  },
+  locate: {
+    width: 50,
+    height: 50,
+    margin: '0 0 -15px -30px',
   },
   end: {
     height: 200,
     background: 'transparent',
     margin: '0 0 10% 0',
     opacity: 0,
-    transition: '2s ease-in-out',
+    transition: '0.3s ease-in-out',
   },
   endHover: {
     opacity: 1,
   },
   title: {
-    fontSize: '100px',
+    width: '100%',
+    fontSize: 90,
     fontWeight: 'bold',
     color: '#fff',
     letterSpacing: 8,
+    textAlign: 'center',
   },
   subtitle: {
-    fontSize: '28px',
+    fontSize: 26,
     color: '#fff',
     letterSpacing: 2,
     marginTop: '-100px',
@@ -121,13 +102,39 @@ const styles = {
     color: '#fff',
     fontStyle: 'italic',
     letterSpacing: 3,
+    marginTop: -20,
+  },
+  landingBtn: {
+    border: '2px solid rgba(255, 255, 255, 0.5)',
+    borderRadius: '5px',
+    background: 'transparent',
+    width: 150,
+    height: 60,
+    padding: 20,
+    fontSize: 18,
+    color: '#fff',
+    marginTop: 70,
+    transition: '0.2s ease-in',
+    ':hover': {
+      background: 'rgba(255, 255, 255, 0.6)',
+      color: '#000',
+    },
+  },
+  landingLine: {
+    display: 'block',
+    position: 'absolute',
+    bottom: 0,
+    margin: '0 0 0 193px',
+    width: 2,
+    height: 29,
+    background: '#fff',
   },
   fadeOut: {
     opacity: 0.1,
   },
   middleBlock: {
     width: '100%',
-    height: '300px',
+    height: '220px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -149,63 +156,11 @@ const styles = {
     letterSpacing: 6,
     padding: 20,
   },
-  judgeBlock: {
-    width: '100%',
-    display: 'flex',
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-  },
-  listBox: {
-    width: '100%',
-    height: '400px',
-    margin: 20,
-    padding: '20px 20px 40px 20px',
-    display: 'flex',
-    justifyContent: 'center',
-    borderBottom: '2px solid #034158',
-  },
-  noBorder: {
-    borderBottom: 'transparent',
-  },
-  innerBox: {
-    display: 'flex',
-    flexWrap: 'no-wrap',
-  },
-  hide: {
-    opacity: 0,
-  },
-  photo: {
-    display: 'block',
-    width: 400,
-    height: 400,
-    opacity: 1,
-    transition: '2s ease-in-out',
-  },
-  descBlock: {
-    flex: 1,
-    minWidth: 600,
-    height: 400,
-  },
-  danceStyle: {
-    fontSize: 50,
-    letterSpacing: 4,
-    fontWeight: 'bold',
-    fontStyle: 'italic',
-    padding: '10px 0 10px 50px',
-  },
-  judgeDescWrapper: {
-    width: '100%',
-    padding: 20,
-    margin: '5px 0 0 40px',
-  },
-  judgeDesc: {
-    fontSize: 20,
-    lineHeight: 1.8,
+  noSpacing: {
+    letterSpacing: 1,
   },
   introBlock: {
     width: '100%',
-    height: 2100,
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
@@ -217,6 +172,7 @@ const styles = {
     letterSpacing: 2,
     textAlign: 'center',
     lineHeight: 2,
+    margin: '-10px 0 15px 0',
   },
   videoBlock: {
     width: '100%',
@@ -310,6 +266,55 @@ const styles = {
     textDecoration: 'none',
     textAlign: 'center',
   },
+  mediaWrapper: {
+    width: '100%',
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  photoWrapper: {
+    width: 600,
+    height: 300,
+    position: 'relative',
+    margin: 50,
+  },
+  photoToggle: {
+    position: 'absolute',
+    height: '100%',
+    width: '10%',
+    top: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    background: 'rgba(0, 0, 0, 0.1)',
+    border: 'none',
+    zIndex: 300,
+    ':hover': {
+      background: 'rgba(0, 0, 0, 0.3)',
+    },
+    ':focus': {
+      outline: 0,
+    },
+  },
+  left: {
+    left: 0,
+  },
+  right: {
+    right: 0,
+  },
+  photoGuide: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    transition: '0.3s ease-in-out',
+  },
+  show: {
+    opacity: 1,
+  },
+  hide: {
+    opacity: 0,
+  },
 };
 
 class SiteIndex extends Component {
@@ -317,14 +322,14 @@ class SiteIndex extends Component {
     super(props);
 
     this.state = {
-      transitTopic: false,
-      transitJudge: false,
       transitEnd: false,
+      photoIndex: 0,
     };
   }
 
   componentDidMount(){
     window.addEventListener('scroll', this.handleScroll.bind(this));
+
   }
 
   componentWillUnmount(){
@@ -333,29 +338,60 @@ class SiteIndex extends Component {
 
   handleScroll(e){
     let scrollTop = e.srcElement.body.scrollTop;
-    console.log(scrollTop);
-    {scrollTop > 150 ? this.setState({ transitTopic: true }) : this.setState({ transitTopic: false })}
-    {scrollTop > 2800 ? this.setState({ transitJudge: true }) : this.setState({ transitJudge: false })}
-    {scrollTop > 4800 ? this.setState({ transitEnd: true }) : this.setState({ transitEnd: false })}
+    //console.log(scrollTop);
+    if (scrollTop > 2800 && this.state.transitEnd === false) { this.setState({ transitEnd: true }); }
+    if (scrollTop < 2800 && this.state.transitEnd === true) { this.setState({ transitEnd: false }); }
+  }
+
+  landingScroll(){
+    const scroll = Scroll.animateScroll;
+    const number = document.getElementById("landing").clientHeight;
+
+    scroll.scrollTo(number); //scroll to about us
+  }
+
+  togglePhotoLeft(){
+    if (this.state.photoIndex === 0) {
+      this.setState({
+        photoIndex: photos.length - 1,
+      });
+    } else {
+      this.setState({
+        photoIndex: this.state.photoIndex - 1,
+      });
+    }
+  }
+
+  togglePhotoRight(){
+    if (this.state.photoIndex === photos.length - 1) {
+      this.setState({
+        photoIndex: 0,
+      });
+    } else {
+      this.setState({
+        photoIndex: this.state.photoIndex + 1,
+      });
+    }
   }
 
   render() {
     const {
-      transitTopic,
-      transitJudge,
-      transitEnd,
-      videoURL
+      transitEnd
     } = this.state;
 
     return (
       <div style={styles.wrapper}>
-        <div style={[styles.landing, styles.first]}>
-          <div style={[styles.sloganBox, transitTopic && styles.fadeOut]}>
+        <div style={[styles.landing, styles.landingBack]} id="landing">
+          <div style={styles.sloganBox}>
             <span style={styles.title}>北區舞展</span>
-            <span style={styles.subtitle}>—— North Taiwan Dance Competition ——</span>
+            <span style={[styles.subtitle, styles.noSpacing]}>──</span><span style={styles.subtitle}>North Taiwan Dance Competition</span><span style={[styles.subtitle, styles.noSpacing]}>──</span>
             <span style={styles.info}>
               初賽：2016/11/26（六）<br />
-              複賽：2016/12/25（日）
+              複賽：2016/12/25（日）<br />
+              <img src={require('../images/ic_action_place.png')} style={styles.locate} />
+              台北大學育樂館 <br />
+              <button style={styles.landingBtn} onClick={this.landingScroll.bind(this)}>了解更多</button>
+              <span style={styles.landingLine}></span>
             </span>
           </div>
         </div>
@@ -395,7 +431,7 @@ class SiteIndex extends Component {
             <div style={styles.logoBox}>
               {sponsors.map((sponsor, index) => {
                 return (
-                  <div style={styles.logoInner}>
+                  <div style={styles.logoInner} key={index}>
                     <img src={sponsor.logo} style={styles.logo}/>
                     <span style={styles.logoDesc}>{sponsor.name}</span>
                   </div>
@@ -406,53 +442,34 @@ class SiteIndex extends Component {
         </div>
         <div style={[styles.middleBlock, styles.backgroundChange]}>
           <div style={styles.middleInner}>
-            <span style={styles.middleContent}>評審陣容</span>
+            <span style={styles.middleContent}>周邊商品</span>
           </div>
         </div>
-        <div style={[styles.judgeBlock, styles.backgroundChange]}>
-          {judges.map((judge, index) => {
-            return (
-              <li style={[styles.listBox, index + 1 === judges.length && styles.noBorder]} key={index}>
-                {index % 2 === 0 ?
-                  <div style={styles.innerBox}>
-                    <img src={judge.photo} style={[styles.hide , transitJudge && styles.photo]}/>
-                    <div style={styles.descBlock}>
-                      <span style={styles.danceStyle}>{judge.style}</span>
-                      {judge.description? (
-                        <ul style={styles.judgeDescWrapper}>
-                          {judge.description.map((desc, index) => {
-                            return (
-                              <li style={styles.judgeDesc} key={index}>{desc.content}</li>
-                            );
-                          })}
-                        </ul>
-                      ): null}
-                    </div>
-                  </div> :
-                  <div style={styles.innerBox}>
-                    <div style={styles.descBlock}>
-                      <span style={styles.danceStyle}>{judge.style}</span>
-                      {judge.description? (
-                        <ul style={styles.judgeDescWrapper}>
-                          {judge.description.map((desc, index) => {
-                            return (
-                              <li style={styles.judgeDesc} key={index}>{desc.content}</li>
-                            );
-                          })}
-                        </ul>
-                      ): null}
-                    </div>
-                    <img src={judge.photo} style={[styles.hide , transitJudge && styles.photo]}/>
-                  </div>
-                }
-              </li>
-            );
-          })}
+        <div style={styles.middleBlock}>
+          <div style={styles.middleInner}>
+            <span style={styles.middleContent}>活動精選</span>
+          </div>
+        </div>
+        <div style={styles.mediaWrapper}>
+          <div style={styles.photoWrapper}>
+            {photos.map((photo, index) => {
+              const show = (this.state.photoIndex === index ? true : false);
+              return (
+                <img src={photo.src} style={[styles.photoGuide, styles.hide, show && styles.show]} key={index}/>
+              );
+            })}
+            <button ref='left' style={[styles.photoToggle, styles.left]} onClick={this.togglePhotoLeft.bind(this)}>
+              <i className='fa fa-angle-left fa-5x' ></i>
+            </button>
+            <button ref='right' style={[styles.photoToggle, styles.right]} onClick={this.togglePhotoRight.bind(this)}>
+              <i className='fa fa-angle-right fa-5x' ></i>
+            </button>
+          </div>
         </div>
         <div style={[styles.landing, styles.second]}>
         <div style={[styles.sloganBox, styles.end, transitEnd && styles.endHover]}>
-          <span style={styles.endTitle}>你還在等什麼？</span>
-          <Link to='/' style={styles.enterButton}>前往報名</Link>
+          <span style={styles.endTitle}>你準備好了嗎？</span>
+          <Link to='/competition' style={styles.enterButton}>前往報名</Link>
         </div>
         </div>
       </div>
