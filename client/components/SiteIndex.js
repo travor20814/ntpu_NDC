@@ -6,8 +6,12 @@ import Scroll from 'react-scroll';
 const Link = Radium(link);
 const videos = [{
   src: 'https://www.youtube.com/embed/a4MCQ1ON_MY',
+  title: '第12屆精彩特輯',
+  subTitle: '每年活動結束後，製作精彩賽事回顧'
 }, {
   src: 'https://www.youtube.com/embed/fKb1DnYnrfE',
+  title: '第11屆活動宣傳片',
+  subTitle: '活動籌備期，製作宣傳片宣傳活動&贊助商'
 }];
 
 const photos = [{
@@ -184,7 +188,7 @@ const styles = {
     lineHeight: 2,
     margin: '-10px 0 15px 0',
   },
-  videoBlock: {
+  introInnerBlock: {
     width: '100%',
     display: 'flex',
     flexWrap: 'no-wrap',
@@ -204,9 +208,6 @@ const styles = {
   videoWrapper: {
     width: 530,
     height: 350,
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
     padding: '10px 0',
     borderRadius: 5,
     boxShadow: '4px 4px 12px -2px rgba(20%, 20%, 40%, 0.5)',
@@ -216,18 +217,27 @@ const styles = {
       height: 440,
     },
   },
+  wrapperInner: {
+    position: 'absolute',
+    width: '100%',
+    height: '95%',
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    transition: '0.2s ease-in-out',
+  },
   video: {
     transition: '0.3s ease-in-out',
   },
   videoDesc: {
-    width: 530,
+    width: '100%',
     fontSize: 20,
     fontWeight: 'bold',
     letterSpacing: 1,
     textAlign: 'center',
   },
   videoSubDesc: {
-    width: 530,
+    width: '100%',
     fontSize: 16,
     letterSpacing: 1,
     textAlign: 'center',
@@ -236,7 +246,7 @@ const styles = {
   videoToggle: {
     position: 'absolute',
     height: '100%',
-    width: '10%',
+    width: '5%',
     top: 0,
     display: 'flex',
     justifyContent: 'center',
@@ -247,6 +257,30 @@ const styles = {
     ':focus': {
       outline: 0,
     },
+  },
+  dotsBox: {
+    position: 'absolute',
+    width: '100%',
+    height: 50,
+    left: 0,
+    bottom: -80,
+    display: 'flex',
+    flexWrap: 'no-wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  dots: {
+    width: 20,
+    height: 20,
+    marginRight: 3,
+    borderRadius: '50%',
+    border: '1px solid #9b9b9b',
+  },
+  unwatch: {
+    background: '#fff',
+  },
+  watching: {
+    background: 'linear-gradient(135deg, #141E30, #243B55)',
   },
   host: {
     width: '100%',
@@ -361,19 +395,27 @@ const styles = {
     height: '100%',
     transition: '0.3s ease-in-out',
   },
-  show: {
+  mediaShow: {
     position: 'relative',
     zIndex: 1,
     opacity: 1,
     left: 0,
     top: 0,
   },
-  hide: {
+  blockShow: {
+    opacity: 1,
+    zIndex: 1,
+  },
+  mediaHide: {
     position: 'absolute',
     zIndex: -500,
     opacity: 0,
     left: 0,
     top: 0,
+  },
+  blockHide: {
+    opacity: 0,
+    zIndex: -1,
   },
 };
 
@@ -465,7 +507,7 @@ class SiteIndex extends Component {
       photoIndex,
       videoIndex
     } = this.state;
-    console.log(videoIndex);
+
     return (
       <div style={styles.wrapper}>
         <div style={[styles.landing, styles.landingBack]} id="landing">
@@ -484,17 +526,25 @@ class SiteIndex extends Component {
         </div>
         <section style={[styles.introBlock, styles.introBackground]}>
           <div style={styles.introBlock}>
-            <div style={styles.videoBlock}>
+            <div style={styles.introInnerBlock}>
               <img src={require('../images/北區標準字.png')} style={styles.bigLogo} />
               <div style={styles.videoWrapper}>
                 {videos.map((video, index) => {
                   const showVideo = (videoIndex === index ? true : false);
                   return (
-                    <iframe key={index} width="95%" height="85%" src={video.src} style={[styles.video, styles.hide, showVideo && styles.show]} frameBorder="0" allowFullScreen></iframe>
+                    <div style={[styles.wrapperInner, styles.blockHide, showVideo && styles.blockShow]} key={index}>
+                      <iframe width="95%" height="85%" src={showVideo && video.src || ""} style={styles.video} frameBorder="0" allowFullScreen></iframe>
+                      <span style={styles.videoDesc}>{video.title}</span>
+                      <span style={styles.videoSubDesc}>{video.subTitle}</span>
+                      <div style={styles.dotsBox}>
+                        {videos.map((dot, idx) => {
+                          const watching = (videoIndex === idx ? true : false );
+                          return <div key={idx} style={[styles.dots, styles.unwatch, watching && styles.watching]}></div>
+                        })}
+                      </div>
+                    </div>
                   );
                 })}
-                <span style={styles.videoDesc}>第12屆精彩特輯</span>
-                <span style={styles.videoSubDesc}>每年活動結束後，製作精彩賽事回顧</span>
                 <button ref='left' style={[styles.videoToggle, styles.leftOut]} onClick={this.toggleVideoLeft.bind(this)}>
                   <i className='fa fa-angle-left fa-5x' ></i>
                 </button>
@@ -540,7 +590,7 @@ class SiteIndex extends Component {
             {photos.map((photo, index) => {
               const showPhoto = (photoIndex === index ? true : false);
               return (
-                <img src={photo.src} style={[styles.photoGuide, styles.hide, showPhoto && styles.show]} key={index}/>
+                <img src={photo.src} style={[styles.photoGuide, styles.mediaHide, showPhoto && styles.mediaShow]} key={index}/>
               );
             })}
             <button ref='photoLeft' style={[styles.photoToggle, styles.left]} onClick={this.togglePhotoLeft.bind(this)}>
