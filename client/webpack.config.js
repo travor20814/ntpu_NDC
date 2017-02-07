@@ -2,27 +2,28 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'cheap-eval-source-map',
   entry: [
-    'eventsource-polyfill',
+    'webpack-hot-middleware/client',
     path.join(__dirname, './app.js'),
   ],
   output: {
     path: __dirname,
     filename: 'bundle.js',
-    publicPath: '/'
+    publicPath: '/',
   },
   plugins: [
     new webpack.DefinePlugin({
       API_HOST: "'http://api.host.com'",
     }),
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
   ],
   module: {
     loaders: [{
       test: /\.js$/,
       loaders: [
+        'react-hot',
         'babel',
       ],
       exclude: /node_modules/,
@@ -34,5 +35,5 @@ module.exports = {
         'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false',
       ],
     }],
-  }
+  },
 };

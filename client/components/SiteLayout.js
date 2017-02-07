@@ -1,5 +1,5 @@
-import React, { Component, PropTypes as T } from 'react';
-import Radium, { StyleRoot } from 'radium';
+import React, { Component } from 'react';
+import radium, { StyleRoot } from 'radium';
 
 import SiteHeader from './SiteHeader.js';
 
@@ -21,29 +21,11 @@ class SiteLayout extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const path = nextProps.location.pathname;
-
-    {path === '/' ? this.setState({ index: true }) : this.setState({ index: false })}
-  }
-
-  componentDidMount() {
-    const path = this.props.location.pathname;
-
-    {path === '/' ? this.setState({ index: true }) : this.setState({ index: false })}
-  }
-
   render() {
-    const {
-      index
-    } = this.state;
-
     return (
       <StyleRoot>
         <div style={styles.wrapper}>
-          <SiteHeader
-            scrollEffect = {index}
-          />
+          <SiteHeader />
           <main style={styles.main}>
             {this.props.children}
           </main>
@@ -53,4 +35,4 @@ class SiteLayout extends Component {
   }
 }
 
-export default Radium(SiteLayout);
+export default radium(SiteLayout);

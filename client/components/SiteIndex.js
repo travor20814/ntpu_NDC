@@ -1,9 +1,13 @@
-import React, { Component, PropTypes as T } from 'react';
-import Radium from 'radium';
+import React, {
+  PropTypes as T,
+  Component,
+} from 'react';
+import radium from 'radium';
 import { Link as link } from 'react-router';
-import Scroll from 'react-scroll';
+import locationImage from '../images/ic_action_place.png';
 
-const Link = Radium(link);
+const Link = radium(link);
+
 const videos = [{
   src: 'https://www.youtube.com/embed/a4MCQ1ON_MY',
   title: '第12屆精彩特輯',
@@ -15,26 +19,26 @@ const videos = [{
 }];
 
 const photos = [{
-  src: require('../images/books.jpg'),
-},{
-  src: require('../images/banner.jpg'),
+  src: require('../images/books.jpg')
+}, {
+  src: require('../images/banner.jpg')
 }];
 
 const sponsors = [{
   name: '台北大學熱舞社',
-  logo: require('../images/logos/logoExample.png'),
-},{
+  logo: require('../images/logos/logoExample.png')
+}, {
   name: '台北大學熱舞社',
-  logo: require('../images/logos/logoExample.png'),
-},{
+  logo: require('../images/logos/logoExample.png')
+}, {
   name: '台北大學熱舞社',
-  logo: require('../images/logos/logoExample.png'),
-},{
+  logo: require('../images/logos/logoExample.png')
+}, {
   name: '台北大學熱舞社',
-  logo: require('../images/logos/logoExample.png'),
-},{
+  logo: require('../images/logos/logoExample.png')
+}, {
   name: '台北大學熱舞社',
-  logo: require('../images/logos/logoExample.png'),
+  logo: require('../images/logos/logoExample.png')
 }];
 
 const styles = {
@@ -177,7 +181,7 @@ const styles = {
     justifyContent: 'center',
   },
   introBackground: {
-    background: 'linear-gradient(to bottom, rgba(252,255,244,0.3) 0%,rgba(233,233,206,0.4) 100%)', /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    background: 'linear-gradient(to bottom, rgba(252,255,244,0.3) 0%,rgba(233,233,206,0.4) 100%)',
     filter: 'progid:DXImageTransform.Microsoft.gradient( startColorstr="#fcfff4", endColorstr="#e9e9ce",GradientType=0 )',
   },
   introduction: {
@@ -199,7 +203,7 @@ const styles = {
     width: 276,
     height: 400,
     margin: '100px 50px',
-    '@media (min-width: 1300px)':{
+    '@media (min-width: 1300px)': {
       width: 414,
       height: 600,
       marginRight: 100,
@@ -212,7 +216,7 @@ const styles = {
     borderRadius: 5,
     boxShadow: '4px 4px 12px -2px rgba(20%, 20%, 40%, 0.5)',
     position: 'relative',
-    '@media (min-width: 1300px)':{
+    '@media (min-width: 1300px)': {
       width: 700,
       height: 440,
     },
@@ -424,36 +428,12 @@ class SiteIndex extends Component {
     super(props);
 
     this.state = {
-      transitEnd: false,
       photoIndex: 0,
-      videoIndex: 0
+      videoIndex: 0,
     };
   }
 
-  componentDidMount(){
-    window.addEventListener('scroll', this.handleScroll.bind(this));
-
-  }
-
-  componentWillUnmount(){
-    window.removeEventListener('scroll', this.handleScroll.bind(this));
-  }
-
-  handleScroll(e){
-    let scrollTop = e.srcElement.body.scrollTop;
-    //console.log(scrollTop);
-    if (scrollTop > 2800 && this.state.transitEnd === false) { this.setState({ transitEnd: true }); }
-    if (scrollTop < 2800 && this.state.transitEnd === true) { this.setState({ transitEnd: false }); }
-  }
-
-  landingScroll(){
-    const scroll = Scroll.animateScroll;
-    const number = document.getElementById("landing").clientHeight;
-
-    scroll.scrollTo(number); //scroll to about us
-  }
-
-  toggleVideoLeft(e){
+  toggleVideoLeft() {
     if (this.state.videoIndex === 0) {
       this.setState({
         videoIndex: videos.length - 1,
@@ -465,7 +445,7 @@ class SiteIndex extends Component {
     }
   }
 
-  toggleVideoRight(e){
+  toggleVideoRight() {
     if (this.state.videoIndex === videos.length - 1) {
       this.setState({
         videoIndex: 0,
@@ -477,7 +457,7 @@ class SiteIndex extends Component {
     }
   }
 
-  togglePhotoLeft(e){
+  togglePhotoLeft() {
     if (this.state.photoIndex === 0) {
       this.setState({
         photoIndex: photos.length - 1,
@@ -489,7 +469,7 @@ class SiteIndex extends Component {
     }
   }
 
-  togglePhotoRight(e){
+  togglePhotoRight() {
     if (this.state.photoIndex === photos.length - 1) {
       this.setState({
         photoIndex: 0,
@@ -503,9 +483,8 @@ class SiteIndex extends Component {
 
   render() {
     const {
-      transitEnd,
       photoIndex,
-      videoIndex
+      videoIndex,
     } = this.state;
 
     return (
@@ -513,13 +492,15 @@ class SiteIndex extends Component {
         <div style={[styles.landing, styles.landingBack]} id="landing">
           <div style={styles.sloganBox}>
             <span style={styles.title}>北區舞展</span>
-            <span style={[styles.subtitle, styles.noSpacing]}>──</span><span style={styles.subtitle}>North Taiwan Dance Competition</span><span style={[styles.subtitle, styles.noSpacing]}>──</span>
+            <span style={[styles.subtitle, styles.noSpacing]}>──</span>
+            <span style={styles.subtitle}>North Taiwan Dance Competition</span>
+            <span style={[styles.subtitle, styles.noSpacing]}>──</span>
             <span style={styles.info}>
               初賽：2016/11/26（六）<br />
               複賽：2016/12/25（日）<br />
-              <img src={require('../images/ic_action_place.png')} style={styles.locate} />
+              <img alt="place" src={locationImage} style={styles.locate} />
               台北大學育樂館 <br />
-              <button style={styles.landingBtn} onClick={this.landingScroll.bind(this)}>了解更多</button>
+              <button style={styles.landingBtn} onClick={this.landingScroll}>了解更多</button>
               <span style={styles.landingLine}></span>
             </span>
           </div>
@@ -527,50 +508,62 @@ class SiteIndex extends Component {
         <section style={[styles.introBlock, styles.introBackground]}>
           <div style={styles.introBlock}>
             <div style={styles.introInnerBlock}>
-              <img src={require('../images/北區標準字.png')} style={styles.bigLogo} />
+              <img alt="logo" src={require('../images/北區標準字.png')} style={styles.bigLogo} />
               <div style={styles.videoWrapper}>
                 {videos.map((video, index) => {
-                  const showVideo = (videoIndex === index ? true : false);
+                  const showVideo = videoIndex === index;
                   return (
                     <div style={[styles.wrapperInner, styles.blockHide, showVideo && styles.blockShow]} key={index}>
-                      <iframe width="95%" height="85%" src={showVideo && video.src || ""} style={styles.video} frameBorder="0" allowFullScreen></iframe>
+                      <iframe
+                        width="95%"
+                        height="85%"
+                        src={showVideo && video.src || ''}
+                        style={styles.video} frameBorder="0"
+                        allowFullScreen>
+                      </iframe>
                       <span style={styles.videoDesc}>{video.title}</span>
                       <span style={styles.videoSubDesc}>{video.subTitle}</span>
                       <div style={styles.dotsBox}>
                         {videos.map((dot, idx) => {
-                          const watching = (videoIndex === idx ? true : false );
-                          return <div key={idx} style={[styles.dots, styles.unwatch, watching && styles.watching]}></div>
+                          const watching = videoIndex === idx;
+                          return (
+                            <div key={idx} style={[styles.dots, styles.unwatch, watching && styles.watching]}></div>
+                          );
                         })}
                       </div>
                     </div>
                   );
                 })}
-                <button ref='left' style={[styles.videoToggle, styles.leftOut]} onClick={this.toggleVideoLeft.bind(this)}>
-                  <i className='fa fa-angle-left fa-5x' ></i>
+                <button
+                  ref="left"
+                  style={[styles.videoToggle, styles.leftOut]}
+                  onClick={this.toggleVideoLeft}>
+                  <i className="fa fa-angle-left fa-5x"></i>
                 </button>
-                <button ref='right' style={[styles.videoToggle, styles.rightOut]} onClick={this.toggleVideoRight.bind(this)}>
-                  <i className='fa fa-angle-right fa-5x' ></i>
+                <button
+                  ref="right"
+                  style={[styles.videoToggle, styles.rightOut]}
+                  onClick={this.toggleVideoRight}>
+                  <i className="fa fa-angle-right fa-5x"></i>
                 </button>
               </div>
             </div>
             <div style={styles.host}>
               <span style={styles.hostTitle}>主辦單位</span>
               <div style={styles.logoBox}>
-                <img src={require('../images/logos/logoExample.png')} style={styles.logo}/>
+                <img alt="logo" src={require('../images/logos/logoExample.png')} style={styles.logo} />
                 <span style={styles.logoDesc}>臺北大學熱舞社</span>
               </div>
             </div>
             <div style={styles.sponsor}>
               <span style={[styles.hostTitle, styles.sponsorTitle]}>贊助廠商</span>
               <div style={styles.logoBox}>
-                {sponsors.map((sponsor, index) => {
-                  return (
-                    <div style={styles.logoInner} key={index}>
-                      <img src={sponsor.logo} style={styles.logo}/>
-                      <span style={styles.logoDesc}>{sponsor.name}</span>
-                    </div>
-                  );
-                })}
+                {sponsors.map((sponsor, index) => (
+                  <div style={styles.logoInner} key={index}>
+                    <img alt="logo" src={sponsor.logo} style={styles.logo} />
+                    <span style={styles.logoDesc}>{sponsor.name}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -588,28 +581,42 @@ class SiteIndex extends Component {
         <div style={styles.mediaWrapper}>
           <div style={styles.photoWrapper}>
             {photos.map((photo, index) => {
-              const showPhoto = (photoIndex === index ? true : false);
+              const showPhoto = photoIndex === index;
               return (
-                <img src={photo.src} style={[styles.photoGuide, styles.mediaHide, showPhoto && styles.mediaShow]} key={index}/>
+                <img
+                  alt="src"
+                  src={photo.src}
+                  style={[styles.photoGuide, styles.mediaHide, showPhoto && styles.mediaShow]}
+                  key={index} />
               );
             })}
-            <button ref='photoLeft' style={[styles.photoToggle, styles.left]} onClick={this.togglePhotoLeft.bind(this)}>
-              <i className='fa fa-angle-left fa-5x' ></i>
+            <button
+              ref="photoLeft"
+              style={[styles.photoToggle, styles.left]}
+              onClick={this.togglePhotoLeft}>
+              <i className="fa fa-angle-left fa-5x"></i>
             </button>
-            <button ref='photoRight' style={[styles.photoToggle, styles.right]} onClick={this.togglePhotoRight.bind(this)}>
-              <i className='fa fa-angle-right fa-5x' ></i>
+            <button
+              ref="photoRight"
+              style={[styles.photoToggle, styles.right]}
+              onClick={this.togglePhotoRight}>
+              <i className="fa fa-angle-right fa-5x"></i>
             </button>
           </div>
         </div>
         <div style={[styles.landing, styles.second]}>
-        <div style={[styles.sloganBox, styles.end, transitEnd && styles.endHover]}>
-          <span style={styles.endTitle}>你準備好了嗎？</span>
-          <Link to='/competition' style={styles.enterButton}>前往報名</Link>
-        </div>
+          <div style={[styles.sloganBox, styles.endHover]}>
+            <span style={styles.endTitle}>你準備好了嗎？</span>
+            <Link to="/competition" style={styles.enterButton}>前往報名</Link>
+          </div>
         </div>
       </div>
     );
   }
 }
 
-export default Radium(SiteIndex);
+SiteIndex.PropTypes = {
+  yoyo: T.func,
+};
+
+export default radium(SiteIndex);

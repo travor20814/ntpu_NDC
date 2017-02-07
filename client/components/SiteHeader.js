@@ -1,24 +1,23 @@
-import React, { Component, PropTypes as T } from 'react';
-import Radium from 'radium';
+import React, { Component } from 'react';
+import radium from 'radium';
 import { Link as link } from 'react-router';
-import Scroll from 'react-scroll';
 
-const Link = Radium(link);
+const Link = radium(link);
 const links = [{
   name: '關於我們',
-  path: '/about',
-},{
+  path: '/about'
+}, {
   name: '評審介紹',
-  path: '/judges',
-},{
+  path: '/judges'
+}, {
   name: '賽制簡介',
-  path: '/competition',
-},{
+  path: '/competition'
+}, {
   name: '活動照片',
-  path: '/',
-},{
+  path: '/'
+}, {
   name: '聯絡我們',
-  path: 'https://www.facebook.com/NorthTaiwanPopdanceUnion/',
+  path: 'https://www.facebook.com/NorthTaiwanDanceCompetition/'
 }];
 
 const styles = {
@@ -43,7 +42,7 @@ const styles = {
     width: 300,
     height: '100%',
   },
-  logo:{
+  logo: {
     width: 220,
     height: 130,
     margin: '-30px 0 0 10px',
@@ -72,66 +71,24 @@ const styles = {
 };
 
 class SiteHeader extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      transit: false,
-    };
-  }
-
-  componentDidMount(){
-    window.addEventListener('scroll', this.handleScroll.bind(this));
-  }
-
-  componentWillUnmount(){
-    window.removeEventListener('scroll', this.handleScroll.bind(this));
-  }
-
-  handleScroll(e){
-    let scrollTop = e.srcElement.body.scrollTop;
-    if (scrollTop > 650 && this.state.transit === false) { this.setState({ transit: true }); }
-    if (scrollTop < 650 && this.state.transit === true ) { this.setState({ transit: false }); }
-  }
-
-  handleClick(index){
-    const scroll = Scroll.animateScroll;
-    switch (index) {
-      case 0: //about us
-        scroll.scrollTo(700);
-        break;
-      case 1: //judges
-        scroll.scrollTo(3100);
-        break;
-      default:
-        scroll.scrollTo(0);
-    }
-  }
-
   render() {
-    const {
-      transit
-    } = this.state;
-
     return (
-      <div style={[styles.wrapper, this.props.scrollEffect && styles.transparent, transit && styles.black]}>
+      <div style={styles.wrapper}>
         <div style={styles.logoBox}>
-          <Link to='/'>
-            <img src={require('../images/logo.png')} style={styles.logo}/>
+          <Link to="/">
+            <img src={require('../images/logo.png')} style={styles.logo} />
           </Link>
         </div>
         <div style={styles.linkBlock}>
-          {links.map((link, index) => {
-            return (
-              index === links.length - 1 ?
-                <a href={link.path} style={styles.links} onClick={this.handleClick.bind(this, index)} target='_blank' key={index}>{link.name}</a> :
-                <Link to={link.path} style={styles.links} key={index}>{link.name}</Link>
-            );
-          })}
+          {links.map((l, index) => (
+            index < links.length - 1 ?
+              <Link to={l.path} style={styles.links} key={index}>{l.name}</Link>
+            : <a href={l.path} style={styles.links} key={index} target="_blank">{l.name}</a>
+          ))}
         </div>
       </div>
     );
   }
 }
 
-export default Radium(SiteHeader);
+export default radium(SiteHeader);

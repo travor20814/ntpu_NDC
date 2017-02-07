@@ -5,8 +5,8 @@
     "script": "run.js",
     "env": {
       "NODE_ENV": "development",
-      "DEBUG": "Set:*",
-      "PORT": "1995",
+      "DEBUG": "NDC:*",
+      "PORT": "9999",
     },
     "next_gen_js": true
   }]

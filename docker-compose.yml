@@ -1,0 +1,6 @@
+version: '2'
+services:
+  admin:
+    image: docker.travor.com/ntpu-ndc
+    ports:
+      - '9999:9999'

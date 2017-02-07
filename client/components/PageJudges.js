@@ -6,34 +6,34 @@ const judges = [{
   style: 'popping',
   photo: require('../images/judges/poppingED.jpg'),
   description: [{
-    content: '帥帥帥',
-  },{
-    content: '帥帥帥',
-  },{
-    content: '帥帥帥',
-  }],
-},{
+    content: '帥帥帥'
+  }, {
+    content: '帥帥帥'
+  }, {
+    content: '帥帥帥'
+  }]
+}, {
   name: '一德老師',
   style: 'popping',
   photo: require('../images/judges/poppingED.jpg'),
   description: [{
-    content: '帥帥帥',
-  },{
-    content: '帥帥帥',
-  },{
-    content: '帥帥帥',
-  }],
-},{
+    content: '帥帥帥'
+  }, {
+    content: '帥帥帥'
+  }, {
+    content: '帥帥帥'
+  }]
+}, {
   name: '一德老師',
   style: 'popping',
   photo: require('../images/judges/poppingED.jpg'),
   description: [{
-    content: '帥帥帥',
-  },{
-    content: '帥帥帥',
-  },{
-    content: '帥帥帥',
-  }],
+    content: '帥帥帥'
+  }, {
+    content: '帥帥帥'
+  }, {
+    content: '帥帥帥'
+  }]
 }];
 
 const styles = {
@@ -91,8 +91,6 @@ const styles = {
     display: 'block',
     width: 400,
     height: 400,
-    'webkit-box-shadow': '10px 10px 39px 0px rgba(0,0,0,0.75)',
-    '-moz-box-shadow': '10px 10px 39px 0px rgba(0,0,0,0.75)',
     boxShadow: '10px 10px 39px 0px rgba(0,0,0,0.75)',
     transition: '2s ease-in-out',
   },
@@ -135,44 +133,38 @@ class PageJudges extends Component {
           </div>
         </div>
         <div style={[styles.judgeBlock, styles.backgroundChange]}>
-          {judges.map((judge, index) => {
-            return (
-              <li style={[styles.listBox, index + 1 === judges.length && styles.noBorder]} key={index}>
-                {index % 2 === 0 ?
-                  <div style={styles.innerBox}>
-                    <img src={judge.photo} style={[styles.photo, styles.rotateRight]}/>
-                    <div style={styles.descBlock}>
-                      <span style={styles.danceStyle}>{judge.name}{'\t'}{judge.style}</span>
-                      {judge.description? (
-                        <ul style={styles.judgeDescWrapper}>
-                          {judge.description.map((desc, index) => {
-                            return (
-                              <li style={styles.judgeDesc} key={index}>{desc.content}</li>
-                            );
-                          })}
-                        </ul>
-                      ): null}
-                    </div>
-                  </div> :
-                  <div style={styles.innerBox}>
-                    <div style={styles.descBlock}>
-                      <span style={styles.danceStyle}>{judge.name}{'\t'}{judge.style}</span>
-                      {judge.description? (
-                        <ul style={styles.judgeDescWrapper}>
-                          {judge.description.map((desc, index) => {
-                            return (
-                              <li style={styles.judgeDesc} key={index}>{desc.content}</li>
-                            );
-                          })}
-                        </ul>
-                      ): null}
-                    </div>
-                    <img src={judge.photo} style={[styles.photo, styles.rotateLeft]}/>
+          {judges.map((judge, index) => (
+            <li style={[styles.listBox, index + 1 === judges.length && styles.noBorder]} key={index}>
+              {index % 2 === 0 ?
+                <div style={styles.innerBox}>
+                  <img alt="ph_first" src={judge.photo} style={[styles.photo, styles.rotateRight]} />
+                  <div style={styles.descBlock}>
+                    <span style={styles.danceStyle}>{judge.name}{'\t'}{judge.style}</span>
+                    {judge.description ? (
+                      <ul style={styles.judgeDescWrapper}>
+                        {judge.description.map((desc, idx) => (
+                          <li style={styles.judgeDesc} key={idx}>{desc.content}</li>
+                        ))}
+                      </ul>
+                    ) : null}
                   </div>
-                }
-              </li>
-            );
-          })}
+                </div> :
+                <div style={styles.innerBox}>
+                  <div style={styles.descBlock}>
+                    <span style={styles.danceStyle}>{judge.name}{'\t'}{judge.style}</span>
+                    {judge.description ? (
+                      <ul style={styles.judgeDescWrapper}>
+                        {judge.description.map((desc, index) => (
+                          <li style={styles.judgeDesc} key={index}>{desc.content}</li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </div>
+                  <img alt="ph_third" src={judge.photo} style={[styles.photo, styles.rotateLeft]} />
+                </div>
+              }
+            </li>
+          ))}
         </div>
       </div>
     );

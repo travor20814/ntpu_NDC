@@ -1,7 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Router, Route, IndexRoute, browserHistory as history, applyRouterMiddleware } from 'react-router';
-import useScroll from 'react-router-scroll/lib/useScroll';
+import { Router, Route, IndexRoute, browserHistory as history } from 'react-router';
 
 // Boards
 import SiteLayout from './components/SiteLayout.js';
@@ -11,12 +9,12 @@ import PageAbout from './components/PageAbout.js';
 import PageCompetition from './components/PageCompetition.js';
 
 export default (
-  <Router history={history} render={applyRouterMiddleware(useScroll())}>
+  <Router history={history}>
     <Route path="/" component={SiteLayout}>
       <IndexRoute component={SiteIndex} />
-      <Route path="/judges" component={PageJudges} />
-      <Route path="/about" component={PageAbout} />
-      <Route path="/competition" component={PageCompetition} />
+      <Route path="/judges" component={PageJudges} pathKey="judges" />
+      <Route path="/about" component={PageAbout} pathKey="about" />
+      <Route path="/competition" component={PageCompetition} pathKey="competition" />
     </Route>
   </Router>
 );

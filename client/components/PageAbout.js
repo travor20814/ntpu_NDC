@@ -9,7 +9,7 @@ const styles = {
   landing: {
     width: '100%',
     height: '45vh',
-    backgroundImage: `url(${require('../images/about_landing.jpg')})`, 
+    backgroundImage: `url(${require('../images/about_landing.jpg')})`,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
