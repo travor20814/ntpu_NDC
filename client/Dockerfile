@@ -18,6 +18,6 @@ ADD index.html /var/www/ntpu_NDC/build/index.html
 
 WORKDIR /var/www/ntpu_NDC
 
-EXPOSE 80
+EXPOSE 8080
 
 CMD nginx -g 'daemon off;'
